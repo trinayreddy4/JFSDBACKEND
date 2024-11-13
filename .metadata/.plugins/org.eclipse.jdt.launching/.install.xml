@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<dirs>
+    <entry loc="/var/lib/snapd/snap/eclipse/101/plugins/org.eclipse.justj.openjdk.hotspot.jre.full.linux.x86_64_21.0.4.v20240802-1551" stamp="1726216693000"/>
+    <entry loc="/var/lib/snapd/snap/eclipse/101/plugins/org.eclipse.justj.openjdk.hotspot.jre.full.linux.x86_64_21.0.4.v20240802-1551/jre" stamp="1726216693000"/>
+    <entry loc="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.432.b06-2.el9.x86_64" stamp="1728847351000"/>
+    <entry loc="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.432.b06-3.el9.x86_64/jre" stamp="1731479142295"/>
+    <entry loc="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.432.b06-3.el9.x86_64" stamp="1729369715000"/>
+    <entry loc="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.432.b06-2.el9.x86_64/jre" stamp="1729341804571"/>
+</dirs>

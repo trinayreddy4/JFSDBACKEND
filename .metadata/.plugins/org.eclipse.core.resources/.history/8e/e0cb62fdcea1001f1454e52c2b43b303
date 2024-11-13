@@ -1,0 +1,5 @@
+package com.gradingsystem.student.model;
+
+public class Submission {
+
+}

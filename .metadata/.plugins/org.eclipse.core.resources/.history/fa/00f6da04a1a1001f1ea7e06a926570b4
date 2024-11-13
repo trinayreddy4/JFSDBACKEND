@@ -1,0 +1,21 @@
+package com.gradingsystem.admin.DTO;
+
+import java.util.List;
+
+import com.gradingsystem.admin.model.Assignment;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.OneToMany;
+
+public class StudentDTO {
+	
+private int student_id;
+	
+	private String name;
+	private String gender;
+	private String email;
+	private String mobileNo;
+	private String location;
+	private List<Assignment> assignments;
+}

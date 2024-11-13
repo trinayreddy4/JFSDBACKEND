@@ -1,0 +1,5 @@
+package com.gradingsystem.admin.service;
+
+public class AssignmentService {
+
+}

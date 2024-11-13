@@ -1,0 +1,16 @@
+package com.gradingsystem.admin.model;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "Student")
+public class Student {
+
+	int id;
+	String name;
+	String gender
+	String email;
+	String location;
+	
+}

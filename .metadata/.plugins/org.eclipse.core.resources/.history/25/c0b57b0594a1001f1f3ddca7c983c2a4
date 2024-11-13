@@ -1,0 +1,18 @@
+package com.gradingsystem.admin.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.gradingsystem.admin.repository.StudentRepository;
+
+@Service
+public class StudentService {
+	
+	private final StudentRepository sr;
+	
+	@Autowired
+	public StudentService(StudentRepository sr) {
+		// TODO Auto-generated constructor stub
+		this.sr = sr;
+	}
+}

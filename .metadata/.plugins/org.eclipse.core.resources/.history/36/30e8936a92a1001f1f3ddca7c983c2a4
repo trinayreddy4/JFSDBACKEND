@@ -1,0 +1,8 @@
+package com.gradingsystem.admin.model;
+
+import jakarta.persistence.Entity;
+
+@Entity
+public class Assignment {
+	String id;
+}
