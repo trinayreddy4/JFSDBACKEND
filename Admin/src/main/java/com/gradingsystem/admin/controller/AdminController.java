@@ -16,12 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.gradingsystem.admin.DTO.AssignmentDTO;
+import com.gradingsystem.admin.DTO.AuthDTO;
+import com.gradingsystem.admin.DTO.LoginDTO;
 import com.gradingsystem.admin.DTO.StudentDTO;
 import com.gradingsystem.admin.DTO.SubmissionDTO;
 import com.gradingsystem.admin.model.Assignment;
 import com.gradingsystem.admin.model.Student;
 import com.gradingsystem.admin.model.Submission;
 import com.gradingsystem.admin.service.AssignmentService;
+import com.gradingsystem.admin.service.AuthService;
 import com.gradingsystem.admin.service.StudentService;
 import com.gradingsystem.admin.service.SubmissionService;
 
@@ -39,6 +42,9 @@ public class AdminController {
 	
 	@Autowired
 	private SubmissionService ss;
+	
+	@Autowired
+	private AuthService aus;
 	
 	@GetMapping("/")
 	public String hello()
@@ -106,5 +112,8 @@ public class AdminController {
 		return ss.postAssignmentMark(sdto,id);
 	}
 	
-	
+	public LoginDTO login(AuthDTO a)
+	{
+		return aus.login(a);
+	}
 }

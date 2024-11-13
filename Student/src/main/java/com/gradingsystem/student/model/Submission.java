@@ -12,11 +12,10 @@ import jakarta.persistence.Id;
 @Entity
 public class Submission {
 	
-	public Submission(String id, String filepath, int student_id, String assignmentId, Instant submittedOn) {
+	public Submission(int id, String filepath,  String assignmentId, Instant submittedOn) {
 		super();
-		this.id = id;
+		this.student_id = id;
 		this.filepath = filepath;
-		this.student_id = student_id;
 		AssignmentId = assignmentId;
 		this.submittedOn = submittedOn;
 	}

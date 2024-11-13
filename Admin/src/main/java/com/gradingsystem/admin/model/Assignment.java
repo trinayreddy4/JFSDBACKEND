@@ -28,7 +28,7 @@ public class Assignment {
 	private String description;
 	private String filePath; 
     private LocalDate deadline;
-    private int maxMarks;
+    private int maxMarks=-1;
     
     
 	public String getId() {

@@ -1,4 +1,4 @@
-package com.gradingsystem.student;
+package com.gradingsystem.student.DTO;
 
 
 import java.time.Instant;
