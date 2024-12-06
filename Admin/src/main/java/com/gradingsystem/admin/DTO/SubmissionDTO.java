@@ -4,6 +4,18 @@ import java.time.Instant;
 
 public class SubmissionDTO {
 	
+	public SubmissionDTO() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public SubmissionDTO(int id, int marks, String assignmentId, Instant submittedOn, String feedBack) {
+		super();
+		this.id = id;
+		this.marks = marks;
+		AssignmentId = assignmentId;
+		this.submittedOn = submittedOn;
+		this.feedBack = feedBack;
+	}
 	public SubmissionDTO(int id, int marks, String assignmentId, Instant submittedOn) {
 		super();
 		this.id = id;
@@ -21,6 +33,7 @@ public class SubmissionDTO {
 	private int marks;
 	private String AssignmentId;
 	private Instant submittedOn;
+	private String feedBack="";
 	
 	public Instant getSubmittedOn() {
 		return submittedOn;
@@ -49,6 +62,12 @@ public class SubmissionDTO {
 	}
 	public void setAssignmentId(String assignmentId) {
 		AssignmentId = assignmentId;
+	}
+	public String getFeedBack() {
+		return feedBack;
+	}
+	public void setFeedBack(String feedBack) {
+		this.feedBack = feedBack;
 	}
 	
 	

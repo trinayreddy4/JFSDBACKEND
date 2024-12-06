@@ -1,5 +1,0 @@
-package com.gradingsystem.admin.repository;
-
-public class StudentRepository {
-
-}

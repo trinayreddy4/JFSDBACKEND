@@ -4,7 +4,9 @@ package com.gradingsystem.student.DTO;
 import java.time.Instant;
 
 public class SubmissionDTO {
-	
+	public SubmissionDTO() {
+		// TODO Auto-generated constructor stub
+	}
 	public SubmissionDTO(int id, int marks, String assignmentId, Instant submittedOn) {
 		super();
 		this.id = id;
@@ -19,7 +21,7 @@ public class SubmissionDTO {
 		this.submittedOn = submittedOn;
 	}
 	private int id;
-	private int marks;
+	private int marks=-1;
 	private String AssignmentId;
 	private Instant submittedOn;
 	

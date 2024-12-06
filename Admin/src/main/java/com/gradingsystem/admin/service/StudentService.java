@@ -50,5 +50,42 @@ public class StudentService {
 		}
 
 	}
+	public String deleteStudent(int id)
+	{
+		try {
+			sr.deleteById(id);
+			return "Student Deleted SuccessFully";
+		}
+		catch(Exception e)
+		{
+			return e.getMessage();
+		}
+	}
 	
+	public String updateStudent(StudentDTO s,int id)
+	{
+		try {
+			@SuppressWarnings("deprecation")
+			var se = sr.getById(id);
+			
+			
+			se.setEmail(s.getEmail());
+			se.setGender(s.getGender());
+			se.setLocation(s.getLocation());
+			se.setMobileNo(s.getMobileNo());
+			se.setName(s.getName());
+			
+			sr.save(se);
+			return "updated Successfully";
+		}
+		catch(Exception e)
+		{
+			return e.getMessage();
+		}
+	}
+	
+	public int getStudentCount()
+	{
+		return sr.getStudentCount();
+	}
 }

@@ -28,17 +28,27 @@ public class SubmissionService {
 		return sr.findAll();
 	}
 	
-	public SubmissionDTO getSubmissionDetails(String id)
+	public int getSubmissionsPendingCount()
+	{
+		return sr.getSubmissionsPendingCount();
+	}
+	
+	public Submission getSubmissionDetails(String id)
 	{
 		Optional<Submission> s = sr.findById(id);
 		
 		if(s.isPresent())
 		{
 			Submission sb = s.get();
-			return new SubmissionDTO(sb.getStudent_id(),sb.getMarksAwarded(),sb.getAssignmentId(),sb.getSubmittedOn());
+			return sb;
 		}
 		else
 		return null;
+	}
+	
+	public List<Submission> getSubmissionByStudentId(int student_id)
+	{
+		return sr.findSubmissionsByStudentId(student_id);
 	}
 	
 	public ResponseEntity<Resource> getSubmissionFileById(String id)
@@ -75,6 +85,8 @@ public class SubmissionService {
 			Submission u = sr.getOne(id);
 			
 			u.setMarksAwarded(sb.getMarks());
+			u.setFeedBack(sb.getFeedBack());
+			sr.save(u);
 			return "Marks Posted Successfully";
 		}
 		catch(Exception e)

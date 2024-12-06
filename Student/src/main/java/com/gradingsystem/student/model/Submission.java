@@ -42,7 +42,7 @@ public class Submission {
 	private String AssignmentId;
 	private Instant submittedOn = Instant.now();
 	
-	private int marksAwarded=0;
+	private int marksAwarded=-1;
 	public String getId() {
 		return id;
 	}

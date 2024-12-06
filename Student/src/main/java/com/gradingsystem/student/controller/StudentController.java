@@ -69,7 +69,7 @@ public class StudentController {
 		return as.getAllAssignments();
 	}
 	
-	//Find The particular Submission Assignment Detail 
+	//Find The particular Submission Assignment Detail  by assignment id uuid
 	@GetMapping("/getAssignment")
 	public Assignment getAssignment(@PathParam("id") String id)
 	{

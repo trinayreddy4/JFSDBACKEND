@@ -4,6 +4,7 @@ import java.nio.file.Files;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,7 +38,12 @@ public class FileController {
 		var file = fs.downloadFile(name);
 		
 		try {
+			HttpHeaders headers = new HttpHeaders();
+	        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + name);
+	        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+	        
 			return ResponseEntity.ok().contentLength(file.length()).contentType(MediaType.APPLICATION_OCTET_STREAM)
+					.headers(headers)
 					.body(new InputStreamResource(Files.newInputStream(file.toPath())));
 		}
 		catch(Exception e)

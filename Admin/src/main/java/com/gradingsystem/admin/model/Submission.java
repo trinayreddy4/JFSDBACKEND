@@ -13,6 +13,18 @@ import jakarta.persistence.Id;
 @Entity
 public class Submission {
 	
+	public Submission(String id, String filepath, int student_id, String assignmentId, String feedBack,
+			Instant submittedOn, int marksAwarded) {
+		super();
+		this.id = id;
+		this.filepath = filepath;
+		this.student_id = student_id;
+		AssignmentId = assignmentId;
+		this.feedBack = feedBack;
+		this.submittedOn = submittedOn;
+		this.marksAwarded = marksAwarded;
+	}
+
 	public Submission(String id, String filepath, int student_id, String assignmentId, Instant submittedOn,
 			int marksAwarded) {
 		super();
@@ -44,6 +56,7 @@ public class Submission {
 	private String filepath;
 	private int student_id;
 	private String AssignmentId;
+	private String feedBack;
 	private Instant submittedOn = Instant.now();
 	
 	private int marksAwarded=0;
@@ -94,5 +107,13 @@ public class Submission {
 
 	public void setAssignmentId(String assignmentId) {
 		AssignmentId = assignmentId;
+	}
+
+	public String getFeedBack() {
+		return feedBack;
+	}
+
+	public void setFeedBack(String feedBack) {
+		this.feedBack = feedBack;
 	}
 }
