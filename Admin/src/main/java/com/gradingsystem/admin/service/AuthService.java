@@ -23,7 +23,7 @@ public class AuthService {
 			
 			if(l.isPresent())
 			{
-				return new LoginDTO(l.get().getUsername(),l.get().getRole());
+				return new LoginDTO(l.get().getUsername(),l.get().getRole(),l.get().getId());
 			}
 			else
 			{
@@ -35,4 +35,5 @@ public class AuthService {
 			return null;
 		}
 	}
+	
 }

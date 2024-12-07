@@ -64,7 +64,7 @@ public class AssignmentService {
 		    }
 
 		    Assignment as = convertToAssignment(a, path);
-
+		    System.out.println(as);
 //		    List<Student> students = sr.findAll();
 //		    
 //		    for (Student student : students) {

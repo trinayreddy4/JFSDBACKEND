@@ -9,6 +9,19 @@ public class LoginDTO {
 	}
 	private String username;
 	private String role;
+	private int id;
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public LoginDTO(String username, String role, int id) {
+		super();
+		this.username = username;
+		this.role = role;
+		this.id = id;
+	}
 	public String getUsername() {
 		return username;
 	}

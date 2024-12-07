@@ -1,5 +1,6 @@
 package com.gradingsystem.admin.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,17 +26,19 @@ import com.gradingsystem.admin.DTO.LoginDTO;
 import com.gradingsystem.admin.DTO.StudentDTO;
 import com.gradingsystem.admin.DTO.SubmissionDTO;
 import com.gradingsystem.admin.model.Assignment;
+import com.gradingsystem.admin.model.Faculty;
 import com.gradingsystem.admin.model.Student;
 import com.gradingsystem.admin.model.Submission;
 import com.gradingsystem.admin.service.AssignmentService;
 import com.gradingsystem.admin.service.AuthService;
+import com.gradingsystem.admin.service.FacultyService;
 import com.gradingsystem.admin.service.StudentService;
 import com.gradingsystem.admin.service.SubmissionService;
 
 import jakarta.ws.rs.PathParam;
 
+@CrossOrigin
 @RestController
-@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 @RequestMapping("admin")
 public class AdminController {
 	
@@ -50,6 +54,9 @@ public class AdminController {
 	@Autowired
 	private AuthService aus;
 	
+	@Autowired
+	private FacultyService fs;
+	
 	@GetMapping("/")
 	public String hello()
 	{
@@ -61,6 +68,11 @@ public class AdminController {
 	@GetMapping("/getStudents")
 	public List<Student> getStudents() {
 		return sr.getStudents();
+	}
+	
+	@GetMapping("/getStudent")
+	public List<Student> getStudents(@PathParam("id") int id) {
+		return sr.getStudents(id);
 	}
 	
 	@PostMapping("/addStudent")
@@ -75,11 +87,26 @@ public class AdminController {
 		return sr.getStudentCount();
 	}
 	
+	
 	@PostMapping("/createAssignment")
-	public String createAssignment(@ModelAttribute AssignmentDTO a,@RequestParam("file") MultipartFile file)
-	{
-		return as.createAssignment(a, file);
+	public String createAssignment(@RequestParam("name") String name,
+			@RequestParam("description") String description , @RequestParam("deadline") LocalDate deadline,@RequestParam("file") MultipartFile file) {
+	    if (file.isEmpty()) {
+	        throw new IllegalArgumentException("File is required");
+	    }
+	    AssignmentDTO ad = new AssignmentDTO();
+	    ad.setDeadline(deadline);
+	    ad.setDescription(description);
+	    ad.setName(name);
+	    
+
+	    if (ad.getDeadline() == null || ad.getDeadline().isBefore(LocalDate.now())) {
+	        throw new IllegalArgumentException("Deadline must be today or in the future");
+	    }
+
+	    return as.createAssignment(ad, file);
 	}
+
 	
 	@CrossOrigin(origins = "http://localhost:5173")
 	@DeleteMapping("/deleteStudent")
@@ -157,11 +184,11 @@ public class AdminController {
 		return ss.getSubmissionByStudentId(student_id);
 	}
 	
-	@GetMapping("/login")
+	@PostMapping("/login")
 	public LoginDTO login(@RequestBody AuthDTO a)
 	{
-		System.out.println(a.getUname());
-		System.out.println(a.getPassword());
+//		System.out.println(a.getUname());
+//		System.out.println(a.getPassword());
 		
 		LoginDTO ret=aus.login(a);
 		if(ret!=null) {
@@ -169,4 +196,39 @@ public class AdminController {
 		System.out.println(ret.getRole());}
 		return ret;
 	}
+	
+	@GetMapping("/getFacultyDetails")
+	public Faculty getFaculty(@PathParam("id") int id)
+	{
+		return fs.getFacultyDetails(id);
+	}
+	
+	@GetMapping("/getFacultyCount")
+	public int getFacultyCount()
+	{
+		return fs.getFacultyCount();
+	}
+	
+	@GetMapping("/getAllFaculties")
+	public List<Faculty> getAllFaculties()
+	{
+		return fs.getAllFaculties();
+	}
+	
+	@PostMapping("/addFaculty")
+	public String addFaculty(@RequestBody Faculty faculty) {
+	    return fs.addFaculty(faculty);
+	}
+
+	@PutMapping("/updateFaculty/{id}")
+	public String updateFaculty(@RequestBody Faculty faculty, @PathVariable("id") int id) {
+	    return fs.updateFaculty(id, faculty);
+	}
+
+	@DeleteMapping("/deleteFaculty/{id}")
+	public String deleteFaculty(@PathVariable("id") int id) {
+	    return fs.deleteFaculty(id);
+	}
+
+	
 }

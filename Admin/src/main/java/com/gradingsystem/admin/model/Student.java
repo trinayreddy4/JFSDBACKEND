@@ -19,28 +19,30 @@ public class Student {
 	{
 		
 	}
-	public Student(String name, String gender, String email, String mobileNo, String location,
-			List<Assignment> assignments) {
+	public Student(String name, String gender, String email, String mobileNo, String location) {
 		super();
 		this.name = name;
 		this.gender = gender;
 		this.email = email;
 		this.mobileNo = mobileNo;
 		this.location = location;
-		this.assignments = assignments;
 	}
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int student_id;
-	
+	private int faculty_id;
+	public int getFaculty_id() {
+		return faculty_id;
+	}
+	public void setFaculty_id(int faculty_id) {
+		this.faculty_id = faculty_id;
+	}
 	private String name;
 	private String gender;
 	private String email;
 	private String mobileNo;
 	private String location;
-	@OneToMany(mappedBy = "id", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@Column(name = "assignments")
-	private List<Assignment> assignments;
+	
 	
 	public String getName() {
 		return name;
@@ -72,12 +74,7 @@ public class Student {
 	public void setMobileNo(String mobileNo) {
 		this.mobileNo = mobileNo;
 	}
-	public List<Assignment> getAssignments() {
-		return assignments;
-	}
-	public void setAssignments(List<Assignment> assignments) {
-		this.assignments = assignments;
-	}
+
 	public int getStudent_id() {
 		return student_id;
 	}
@@ -87,7 +84,7 @@ public class Student {
 	@Override
 	public String toString() {
 		return "Student [student_id=" + student_id + ", name=" + name + ", gender=" + gender + ", email=" + email
-				+ ", mobileNo=" + mobileNo + ", location=" + location + ", assignments=" + assignments + "]";
+				+ ", mobileNo=" + mobileNo + ", location=" + location + "]";
 	}
 	
 	

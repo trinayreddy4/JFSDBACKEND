@@ -19,7 +19,7 @@ public class StudentService {
 	
 	private Student convertToStudent(StudentDTO  s)
 	{
-		return new Student(s.getName(),s.getGender(),s.getEmail(),s.getMobileNo(),s.getLocation(),new ArrayList<Assignment>());
+		return new Student(s.getName(),s.getGender(),s.getEmail(),s.getMobileNo(),s.getLocation());
 	}
 	
 	//Admin Should be able to Fetch the List of students
@@ -29,7 +29,10 @@ public class StudentService {
 	{
 		return sr.findAll();
 	}
-	
+	public List<Student> getStudents(int id)
+	{
+		return sr.findAllByFacultyId(id);
+	}
 	public String addStudent(StudentDTO S)
 	{
 		Student s = convertToStudent(S);
@@ -38,18 +41,6 @@ public class StudentService {
 		return "Student Added Successfully";
 	}
 	
-	public List<Assignment> getStudentAssignment(int id)
-	{
-		Optional<Student> s = sr.findById(id);
-
-		if (s.isPresent()) {  
-		    Student temp = s.get(); 
-		    return temp.getAssignments();  
-		} else {
-		    return null;  
-		}
-
-	}
 	public String deleteStudent(int id)
 	{
 		try {

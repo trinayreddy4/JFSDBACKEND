@@ -10,6 +10,13 @@ private int student_id;
 	private String email;
 	private String mobileNo;
 	private String location;
+	private int faculty_id;
+	public int getFaculty_id() {
+		return faculty_id;
+	}
+	public void setFaculty_id(int faculty_id) {
+		this.faculty_id = faculty_id;
+	}
 	public int getStudent_id() {
 		return student_id;
 	}

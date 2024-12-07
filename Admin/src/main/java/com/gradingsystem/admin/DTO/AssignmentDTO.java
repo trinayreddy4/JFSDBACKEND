@@ -8,7 +8,7 @@ public class AssignmentDTO {
 	private String name;
 	private String description;
 	private LocalDate deadline;
-	private int maxMarks;
+	private int maxMarks=10;
 	public String getName() {
 		return name;
 	}
