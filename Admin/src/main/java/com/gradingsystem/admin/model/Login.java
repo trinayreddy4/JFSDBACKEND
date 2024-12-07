@@ -12,6 +12,9 @@ public class Login {
 		this.password = password;
 		this.role = role;
 	}
+	public Login() {
+		super();
+	}
 	public Login(String username, String password) {
 		super();
 		this.username = username;

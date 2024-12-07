@@ -53,7 +53,7 @@ public class AdminController {
 	@GetMapping("/")
 	public String hello()
 	{
-		return "Hello Trinay Reddy";
+		return "<h1>Hello Trinay Reddy</h1>";
 		
 	}
 	
@@ -157,8 +157,16 @@ public class AdminController {
 		return ss.getSubmissionByStudentId(student_id);
 	}
 	
-	public LoginDTO login(AuthDTO a)
+	@GetMapping("/login")
+	public LoginDTO login(@RequestBody AuthDTO a)
 	{
-		return aus.login(a);
+		System.out.println(a.getUname());
+		System.out.println(a.getPassword());
+		
+		LoginDTO ret=aus.login(a);
+		if(ret!=null) {
+		System.out.println(ret.getUsername());
+		System.out.println(ret.getRole());}
+		return ret;
 	}
 }
