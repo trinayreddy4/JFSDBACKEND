@@ -38,16 +38,15 @@ public class AssignmentService {
 	
 	public Assignment convertToAssignment(AssignmentDTO a,String path)
 	{
-		return new Assignment(a.getName(),a.getDescription(),path,a.getDeadline(),a.getMaxMarks());
+		return new Assignment(a.getName(),a.getDescription(),path,a.getFaculty_id(),a.getDeadline(),a.getMaxMarks());
 	}
-	public String createAssignment(AssignmentDTO a,MultipartFile File)
-	{
-		try {
-			
-			HttpHeaders headers = new HttpHeaders();
+	public String createAssignment(AssignmentDTO a, MultipartFile file) {
+	    try {
+	    	System.out.println(a.getFaculty_id());
+	        HttpHeaders headers = new HttpHeaders();
 	        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
 	        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
-	        body.add("file", File.getResource()); 
+	        body.add("file", file.getResource()); 
 	        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
 
 	        ResponseEntity<String> response = restTemplate.exchange(
@@ -57,30 +56,30 @@ public class AssignmentService {
 	                String.class
 	        );
 
-	        String path= response.getBody();
-			
-		    if (path == null || path.isEmpty()) {
-		        return "File upload failed: Invalid file path.";
-		    }
+	        String path = response.getBody();
+	        
+	        if (path == null || path.isEmpty()) {
+	            return "File upload failed: Invalid file path.";
+	        }
 
-		    Assignment as = convertToAssignment(a, path);
-		    System.out.println(as);
-//		    List<Student> students = sr.findAll();
-//		    
-//		    for (Student student : students) {
-//		        student.getAssignments().add(as);  
-//		    }
+	        Assignment assignment = convertToAssignment(a, path);
+	        ar.save(assignment);
 
-		    ar.save(as); 
+	        return "Assignment Created Successfully";
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return "An error occurred: " + e.getMessage();
+	    }
+	}
 
-		    return "Assignment Created Successfully";
-
-		} catch (Exception e) {
-		    e.printStackTrace();
-		    return "An error occurred: " + e.getMessage();
+	public Assignment getAssignmentById(String id)
+	{
+		var ass = ar.findById(id);
+		if(ass.isPresent())
+		{
+			return ass.get();
 		}
-
-
+		return null;
 	}
 	
 	public List<Assignment> getAllAssignments()
@@ -119,5 +118,34 @@ public class AssignmentService {
 		{
 			return ResponseEntity.notFound().build();
 		}
+	}
+	public String updateAssignment(Assignment updatedAssignment) {
+        Optional<Assignment> existingAssignment = ar.findById(updatedAssignment.getId());
+        if (existingAssignment.isPresent()) {
+            Assignment assignment = existingAssignment.get();
+            assignment.setName(updatedAssignment.getName());
+            assignment.setDescription(updatedAssignment.getDescription());
+            assignment.setDeadline(updatedAssignment.getDeadline());
+            assignment.setMaxMarks(updatedAssignment.getMaxMarks());
+            ar.save(assignment);
+            return "Assignment updated successfully";
+        } else {
+            return "Assignment not found";
+        }
+    }
+	
+	public String deleteAssignment(String id) {
+	    Optional<Assignment> assignment = ar.findById(id);
+	    if (assignment.isPresent()) {
+	        ar.deleteById(id);
+	        return "Assignment deleted successfully";
+	    } else {
+	        return "Assignment not found";
+	    }
+	}
+	
+	public List<Assignment> getAssignmentsByFacultyId(int id)
+	{
+		return ar.getAssignmentsByFacultyId(id);
 	}
 }

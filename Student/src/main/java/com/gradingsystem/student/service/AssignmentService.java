@@ -33,5 +33,10 @@ public class AssignmentService {
 		}
 	}
 	
+	public List<Assignment> getAllAssignmentsByFacultyId(int facultyId) {
+	    return ar.findByFacultyId(facultyId);
+	}
+
+	
 	
 }

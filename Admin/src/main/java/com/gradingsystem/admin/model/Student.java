@@ -19,13 +19,14 @@ public class Student {
 	{
 		
 	}
-	public Student(String name, String gender, String email, String mobileNo, String location) {
+	public Student(String name, String gender, String email, String mobileNo, String location,int faculty_id) {
 		super();
 		this.name = name;
 		this.gender = gender;
 		this.email = email;
 		this.mobileNo = mobileNo;
 		this.location = location;
+		this.faculty_id=faculty_id;
 	}
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

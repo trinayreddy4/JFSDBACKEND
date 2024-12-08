@@ -9,6 +9,7 @@ public class AssignmentDTO {
 	private String description;
 	private LocalDate deadline;
 	private int maxMarks=10;
+	private int faculty_id;
 	public String getName() {
 		return name;
 	}
@@ -39,6 +40,12 @@ public class AssignmentDTO {
 	}
 	public void setId(String id) {
 		this.id = id;
+	}
+	public int getFaculty_id() {
+		return faculty_id;
+	}
+	public void setFaculty_id(int faculty_id) {
+		this.faculty_id = faculty_id;
 	}
 	
 }

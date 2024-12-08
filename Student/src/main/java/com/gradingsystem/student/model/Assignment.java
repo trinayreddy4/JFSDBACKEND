@@ -1,8 +1,8 @@
 package com.gradingsystem.student.model;
 
-
 import java.time.LocalDate;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,14 +22,38 @@ public class Assignment {
 		this.deadline = deadline;
 		this.maxMarks = maxMarks;
 	}
+	public Assignment(String id, String name, String description, String filePath, int faculty_id, LocalDate deadline,
+			int maxMarks) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.filePath = filePath;
+		this.faculty_id = faculty_id;
+		this.deadline = deadline;
+		this.maxMarks = maxMarks;
+	}
+	public Assignment(String name, String description, String filePath, int faculty_id, LocalDate deadline,
+			int maxMarks) {
+		super();
+		this.name = name;
+		this.description = description;
+		this.filePath = filePath;
+		this.faculty_id = faculty_id;
+		this.deadline = deadline;
+		this.maxMarks = maxMarks;
+	}
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private String id;
+	@Column(name = "name")
 	private String name;
+	@Column(name = "description")
 	private String description;
 	private String filePath; 
+	private int faculty_id;
     private LocalDate deadline;
-    private int maxMarks;
+    private int maxMarks=-1;
     
     
 	public String getId() {
@@ -73,6 +97,12 @@ public class Assignment {
 	}
 	public void setMaxMarks(int maxMarks) {
 		this.maxMarks = maxMarks;
+	}
+	public int getFaculty_id() {
+		return faculty_id;
+	}
+	public void setFaculty_id(int faculty_id) {
+		this.faculty_id = faculty_id;
 	}
 	
 	

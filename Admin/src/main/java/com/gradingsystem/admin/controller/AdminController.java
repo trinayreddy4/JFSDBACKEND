@@ -87,10 +87,19 @@ public class AdminController {
 		return sr.getStudentCount();
 	}
 	
+	@GetMapping("/getStudentCountr")
+	public int getStudentsCount(@PathParam("id")int id)
+	{
+		return sr.getStudentCount(id);
+	}
+	
 	
 	@PostMapping("/createAssignment")
 	public String createAssignment(@RequestParam("name") String name,
-			@RequestParam("description") String description , @RequestParam("deadline") LocalDate deadline,@RequestParam("file") MultipartFile file) {
+	                               @RequestParam("description") String description,
+	                               @RequestParam("deadline") LocalDate deadline,
+	                               @RequestParam("faculty_id")int id,
+	                               @RequestParam("file") MultipartFile file) {
 	    if (file.isEmpty()) {
 	        throw new IllegalArgumentException("File is required");
 	    }
@@ -98,8 +107,7 @@ public class AdminController {
 	    ad.setDeadline(deadline);
 	    ad.setDescription(description);
 	    ad.setName(name);
-	    
-
+	    ad.setFaculty_id(id);
 	    if (ad.getDeadline() == null || ad.getDeadline().isBefore(LocalDate.now())) {
 	        throw new IllegalArgumentException("Deadline must be today or in the future");
 	    }
@@ -107,7 +115,6 @@ public class AdminController {
 	    return as.createAssignment(ad, file);
 	}
 
-	
 	@CrossOrigin(origins = "http://localhost:5173")
 	@DeleteMapping("/deleteStudent")
 	public String deleteStudent(@PathParam("id") int id)
@@ -126,6 +133,19 @@ public class AdminController {
 	{
 		return as.getAllAssignments().size();
 	}
+	
+	@GetMapping("/getAssignmentCountr")
+	public int getAssignmentCount(@PathParam("id") int id)
+	{
+		return as.getAssignmentsByFacultyId(id).size();
+	}
+	
+	@GetMapping("/getAssignmentsr")
+	public List<Assignment> getAssignments(@PathParam("id") int id)
+	{
+		return as.getAssignmentsByFacultyId(id);
+	}
+	
 	
 	
 	@GetMapping("/getAllSubmissions")
@@ -171,11 +191,22 @@ public class AdminController {
 		return sr.updateStudent(s,id);
 	}
 	
+	@PutMapping("/updateAssignment")
+    public String updateAssignment(@RequestBody Assignment assignment) {
+        return as.updateAssignment(assignment);
+    }
+	
 	@GetMapping("/getSubmissionsPendingCount")
 	public int getSubmissionsPendingCount()
 	{
 		return ss.getSubmissionsPendingCount();
 	}
+	
+	@DeleteMapping("/deleteAssignment/{id}")
+	public String deleteAssignment(@PathVariable("id") String id) {
+	    return as.deleteAssignment(id);
+	}
+
 	
 	
 	@GetMapping("/getStudentSubmissions/{student_id}")
@@ -207,6 +238,12 @@ public class AdminController {
 	public int getFacultyCount()
 	{
 		return fs.getFacultyCount();
+	}
+	
+	@GetMapping("/getAssignmentById")
+	public Assignment getAssignmentById(@PathParam("id")String id)
+	{
+		return as.getAssignmentById(id);
 	}
 	
 	@GetMapping("/getAllFaculties")

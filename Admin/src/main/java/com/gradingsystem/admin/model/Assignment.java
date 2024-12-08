@@ -22,6 +22,27 @@ public class Assignment {
 		this.deadline = deadline;
 		this.maxMarks = maxMarks;
 	}
+	public Assignment(String id, String name, String description, String filePath, int faculty_id, LocalDate deadline,
+			int maxMarks) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.filePath = filePath;
+		this.faculty_id = faculty_id;
+		this.deadline = deadline;
+		this.maxMarks = maxMarks;
+	}
+	public Assignment(String name, String description, String filePath, int faculty_id, LocalDate deadline,
+			int maxMarks) {
+		super();
+		this.name = name;
+		this.description = description;
+		this.filePath = filePath;
+		this.faculty_id = faculty_id;
+		this.deadline = deadline;
+		this.maxMarks = maxMarks;
+	}
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private String id;
@@ -76,6 +97,12 @@ public class Assignment {
 	}
 	public void setMaxMarks(int maxMarks) {
 		this.maxMarks = maxMarks;
+	}
+	public int getFaculty_id() {
+		return faculty_id;
+	}
+	public void setFaculty_id(int faculty_id) {
+		this.faculty_id = faculty_id;
 	}
 	
 	
