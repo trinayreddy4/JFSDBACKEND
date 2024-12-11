@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
@@ -50,27 +51,42 @@ public class StudentController {
 	private AuthService aus;
 	
 	@PostMapping("/submit")
-	public String submitAssignment(@ModelAttribute SubmissionDTO sd,MultipartFile file)
-	{
-		HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
-        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
-        body.add("file", file.getResource()); 
-        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
+    public String submitAssignment(@RequestParam("file") MultipartFile file,
+                                   @RequestParam("assignmentId") String assignmentId,
+                                   @RequestParam("studentId") String studentId) {
+        try {
+            // Prepare the headers for multipart request
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.MULTIPART_FORM_DATA);
 
-        ResponseEntity<String> response = restTemplate.exchange(
-                "http://localhost:2000/file/upload", 
-                HttpMethod.POST,
-                requestEntity,
-                String.class
-        );
+            // Prepare the body for the multipart request
+            MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+            body.add("file", file.getResource());
 
-        String path= response.getBody();
-        
-        Submission s  =new Submission(sd.getId(),path,sd.getAssignmentId(),sd.getSubmittedOn());
-        
-        return ss.submitAssignment(s);
-	}
+            // Create HttpEntity with headers and body
+            HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
+
+            // Make a request to upload the file
+            ResponseEntity<String> response = restTemplate.exchange(
+                    "http://localhost:2000/file/upload",
+                    HttpMethod.POST,
+                    requestEntity,
+                    String.class
+            );
+
+            // Assuming the file path is returned by the upload endpoint
+            String path = response.getBody();
+
+            // Create a Submission object with the relevant data
+            Submission submission = new Submission(path, assignmentId, new java.util.Date());
+
+            // Save the submission (assumed method in service)
+            return ss.submitAssignment(submission);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Failed to submit the assignment";
+        }
+    }
 	
 	@GetMapping("/getAssignments")
 	public List<Assignment> getAllAssignments(@PathParam("id") int id)

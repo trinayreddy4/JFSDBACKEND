@@ -2,6 +2,7 @@ package com.gradingsystem.student.model;
 
 
 import java.time.Instant;
+import java.util.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -29,10 +30,17 @@ public class Submission {
 
 	public Submission()
 	{
-		
 	}
 	
 	
+	public Submission(String path, String assignmentId2, Date date) {
+		// TODO Auto-generated constructor stub
+		this.filepath=path;
+		this.AssignmentId=assignmentId2;
+//		this.submittedOn=(Instant)date;
+	}
+
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private String id;
